@@ -58,12 +58,18 @@ To begin using the project, follow these simple steps:
 
 5. **Start Using the Project**: Once the setup is complete, you're ready to start using the project! Refer to the project documentation or codebase for specific instructions on how to interact with the functionality provided.
 
-**Note:** This project contains unit tests aimed to validate all the mentioned functionality. To check the performance of the components, simply run the tests located in the `project_directory/tests` folder.
+**Note:** This project contains unit tests aimed to validate all the mentioned functionality. To check the performance of the components, you can run the tests using PHPUnit from the project directory:
+   ```
+   ./vendor/bin/phpunit tests
+   ```
 
-**Hint:** As an example, you can run the tests using PHPUnit from the project directory:
+Alternatively, you can run tests across Composer using the provided script:
    ```
-   ./vendor/bin/phpunit tests/Api/ApiClientTest.php
+   composer test
    ```
+
+By running these commands, you can ensure that your project components are functioning as expected.
+
 
 ## Configuration
 If your project requires specific configuration settings, API keys, or environment variables, follow these steps to set them up:
