@@ -2,6 +2,8 @@
 
 namespace QuickTopUpAPI\Api;
 
+use DateTime;
+use DateTimeZone;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -67,13 +69,15 @@ class ApiClient {
    *
    * @return mixed
    *   The response from the API.
+   * @throws \Exception
    */
   public function sendRequest(
     string $method,
     string $endpoint,
     array $data = []
   ): mixed {
-    $timestamp = gmdate('c');
+    $dateTime = new DateTime('now', new DateTimeZone('America/New_York'));
+    $timestamp = $dateTime->format('c');
     $authKey = $this->generateAuthHmac($timestamp, $this->apiSecurityKey);
     $hashedPassword = $this->generateAuthHmac($this->apiPassword, $authKey);
 
