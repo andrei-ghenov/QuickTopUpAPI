@@ -16,6 +16,6 @@ class StatusCheckService
     public function checkStatus($ctid)
     {
         $endpoint = 'WSGetTransactionStatus';
-        return $this->apiClient->sendRequest('GET', $endpoint, ['CTID' => $ctid]);
+        return $this->apiClient->sendRequest('POST', $endpoint, ['CTID' => $ctid]);
     }
 }

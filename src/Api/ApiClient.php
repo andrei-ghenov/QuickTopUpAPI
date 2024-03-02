@@ -5,59 +5,112 @@ namespace QuickTopUpAPI\Api;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
-class ApiClient
-{
-    private $client;
-    private $apiUser;
-    private $apiPassword;
-    private $apiSecurityKey;
+/**
+ * Class ApiClient
+ *
+ * @package QuickTopUpAPI\Api
+ *
+ *  A simple API client to send requests to the QuickTopUp API.
+ */
+class ApiClient {
 
-    public function __construct()
-    {
-        $this->client = new Client([
-            'base_uri' => $_ENV['API_BASE_URL'],
-        ]);
-        $this->apiUser = $_ENV['API_USER'];
-        $this->apiPassword = $_ENV['API_PASSWORD'];
-        $this->apiSecurityKey = $_ENV['API_SECURITY_KEY'];
+  /**
+   * @var Client
+   *
+   * The Guzzle HTTP client.
+   */
+  private $client;
+
+  /**
+   * @var string
+   *
+   * The API user.
+   */
+  private $apiUser;
+
+  /**
+   * @var string
+   *
+   * The API password.
+   */
+  private $apiPassword;
+
+  /**
+   * @var string
+   *
+   * The API security key.
+   */
+  private $apiSecurityKey;
+
+  /**
+   * ApiClient constructor.
+   */
+  public function __construct() {
+    $this->client = new Client([
+      'base_uri' => $_ENV['API_BASE_URL'],
+    ]);
+    $this->apiUser = $_ENV['API_USER'];
+    $this->apiPassword = $_ENV['API_PASSWORD'];
+    $this->apiSecurityKey = $_ENV['API_SECURITY_KEY'];
+  }
+
+  /**
+   * Send a request to the QuickTopUp API.
+   *
+   * @param  string  $method
+   *   The HTTP method to use for the request.
+   * @param  string  $endpoint
+   *   The API endpoint to send the request to.
+   * @param  array   $data
+   *   The request data.
+   *
+   * @return mixed
+   *   The response from the API.
+   */
+  public function sendRequest($method, $endpoint, array $data = []): mixed {
+    $timestamp = gmdate('c');
+    $authKey = $this->generateAuthKey($timestamp);
+    $hashedPassword = $this->hashPassword();
+
+    // Add authentication parameters to the request data.
+    $data = array_merge($data, [
+      'DTime' => $timestamp,
+      'AuthKey' => $authKey,
+      'User' => $this->apiUser,
+      'Password' => $hashedPassword,
+    ]);
+
+    try {
+      $response = $this->client->request($method, $endpoint, [
+        'json' => $data,
+        'headers' => [
+          'Content-Type' => 'application/json',
+        ],
+      ]);
+
+      return json_decode($response->getBody()->getContents(), TRUE);
     }
-
-    private function generateAuthKey($timestamp)
-    {
-        // Generate the HMAC SHA256 hash of the timestamp using the API security key.
-        return base64_encode(hash_hmac('sha256', $timestamp, $this->apiSecurityKey, true));
+    catch (GuzzleException $e) {
+      return ['error' => $e->getMessage()];
     }
+  }
 
-    private function hashPassword()
-    {
-        // Hash the API password using SHA256.
-        return hash('sha256', $this->apiPassword);
-    }
+  /**
+   * Generate the authentication key using the API security key.
+   */
+  private function generateAuthKey($timestamp): string {
+    return base64_encode(
+      hash_hmac(
+        'sha256', $timestamp, $this->apiSecurityKey, TRUE
+      )
+    );
+  }
 
-    public function sendRequest($method, $endpoint, array $data = [])
-    {
-        $timestamp = gmdate('c');
-        $authKey = $this->generateAuthKey($timestamp);
-        $hashedPassword = $this->hashPassword();
+  /**
+   * Hash the API password using SHA256.
+   */
+  private function hashPassword(): string {
+    return hash('sha256', $this->apiPassword);
+  }
 
-        // Add authentication parameters to the request data.
-        $data = array_merge($data, [
-            'DTime' => $timestamp,
-            'AuthKey' => $authKey,
-            'User' => $this->apiUser,
-            'Password' => $hashedPassword,
-        ]);
-
-        try {
-            $response = $this->client->request($method, $endpoint, [
-                'json' => $data,
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                ],
-            ]);
-            return json_decode($response->getBody()->getContents(), true);
-        } catch (GuzzleException $e) {
-            return ['error' => $e->getMessage()];
-        }
-    }
 }
