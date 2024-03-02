@@ -69,7 +69,9 @@ class ApiClient {
    *   The response from the API.
    */
   public function sendRequest(
-    string $method, string $endpoint, array $data = []
+    string $method,
+    string $endpoint,
+    array $data = []
   ): mixed {
     $timestamp = gmdate('c');
     $authKey = $this->generateAuthKey($timestamp);
