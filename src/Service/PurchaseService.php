@@ -45,8 +45,7 @@ class PurchaseService {
    * @return array
    *   The purchase response.
    */
-  public function sendPurchase($productID, $amount, $phoneNumber, $ctid
-  ): array {
+  public function sendPurchase($productID, $amount, $phoneNumber, $ctid): array {
     $endpoint = 'WSSendTopUpPurchaseRequest';
     $body = [
       'Product' => $productID,

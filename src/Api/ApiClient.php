@@ -74,8 +74,8 @@ class ApiClient {
     array $data = []
   ): mixed {
     $timestamp = gmdate('c');
-    $authKey = $this->generateAuthKey($timestamp);
-    $hashedPassword = $this->hashPassword();
+    $authKey = $this->generateAuthHmac($timestamp, $this->apiSecurityKey);
+    $hashedPassword = $this->generateAuthHmac($this->apiPassword, $authKey);
 
     // Add authentication parameters to the request data.
     $data = array_merge([
@@ -101,21 +101,14 @@ class ApiClient {
   }
 
   /**
-   * Generate the authentication key using the API security key.
+   * Generates an HMAC SHA256 hash using the API security key.
+   *
+   * @param string $message The message to hash.
+   * @param string $secret The secret key for HMAC.
+   * @return string The base64-encoded HMAC hash.
    */
-  private function generateAuthKey($timestamp): string {
-    return base64_encode(
-      hash_hmac(
-        'sha256', $timestamp, $this->apiSecurityKey, TRUE
-      )
-    );
-  }
-
-  /**
-   * Hash the API password using SHA256.
-   */
-  private function hashPassword(): string {
-    return hash('sha256', $this->apiPassword);
+  private function generateAuthHmac($message, $secret): string {
+    return base64_encode(hash_hmac('sha256', $message, $secret, true));
   }
 
 }
