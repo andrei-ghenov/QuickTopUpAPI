@@ -18,7 +18,7 @@ class PurchaseService {
    *
    * The API client.
    */
-  private $apiClient;
+  private ApiClient $apiClient;
 
   /**
    * PurchaseService constructor.

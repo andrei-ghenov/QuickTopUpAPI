@@ -18,7 +18,7 @@ class ProductService {
    *
    * The API client.
    */
-  private $apiClient;
+  private ApiClient $apiClient;
 
   /**
    * ProductService constructor.
@@ -36,7 +36,7 @@ class ProductService {
    * @return array
    *   The products.
    */
-  public function getAllProducts() {
+  public function getAllProducts(): array {
     $endpoint = 'WSGetTopUpProducts';
 
     return $this->apiClient->sendRequest('POST', $endpoint);
@@ -51,7 +51,7 @@ class ProductService {
    * @return array
    *   The product.
    */
-  public function getProductById($productID) {
+  public function getProductById(int $productID): mixed {
     $endpoint = "WSGetSingleTopUpProduct";
 
     return $this->apiClient->sendRequest(

@@ -19,32 +19,74 @@ class ApiClientTest extends TestCase {
    *
    * The API client.
    */
-  private $apiClient;
+  private ApiClient $apiClient;
 
   /**
    * Test a successful login request.
    */
   public function testWSLoginSuccess() {
-    $response = $this->apiClient->sendRequest('POST', 'WSLogin');
+    try {
+      $response = $this->apiClient->sendRequest('POST', 'WSLogin');
 
-    // Assert the response indicates a successful login
-    $this->assertArrayHasKey('AccessCode', $response);
-    $this->assertEquals(0, $response['AccessCode']);
+      // Use PHPUnit assertions to check for successful login
+      // Display the response for debugging purposes
+      // (usually done during development only)
+      echo "Response: ";
+      var_dump($response);
+
+      // Assert the response indicates a successful login
+      $this->assertArrayHasKey(
+        'AccessCode', $response, "Response does not contain AccessCode"
+      );
+      $this->assertEquals(
+        0, $response['AccessCode'],
+        "AccessCode is not 0, indicating login failure"
+      );
+    }
+    catch (\Exception $e) {
+      // Catch and display the error for debugging purposes
+      // In production or CI environments, it might be better to log this error
+      // or handle it accordingly.
+      echo "Error during WSLogin request: ".$e->getMessage();
+      // Fail the test if an exception is caught
+      $this->fail(
+        "WSLogin request failed with an exception: ".$e->getMessage()
+      );
+    }
   }
 
   /**
    * Test a failed login request.
    */
   public function testWSLoginFailure() {
-    // Use intentionally incorrect credentials to test failure response
-    $response = $this->apiClient->sendRequest('POST', 'WSLogin', [
-      'User' => 'incorrectUser',
-      'Password' => 'incorrectPassword',
-    ]);
+    try {
+      // Use intentionally incorrect credentials to test failure response.
+      $response = $this->apiClient->sendRequest('POST', 'WSLogin', [
+        'User' => 'incorrectUser',
+        'Password' => 'incorrectPassword',
+      ]);
 
-    // Assert the response indicates a failed login
-    $this->assertArrayHasKey('AccessCode', $response);
-    $this->assertNotEquals(0, $response['AccessCode']);
+      // Debugging output (use sparingly)
+      echo "Response: ";
+      var_dump($response);
+
+      // Assert the response indicates a failed login.
+      $this->assertArrayHasKey(
+        'AccessCode', $response, "Response does not contain AccessCode"
+      );
+      $this->assertNotEquals(
+        0, $response['AccessCode'],
+        "AccessCode is 0, indicating unexpected success"
+      );
+    }
+    catch (\Exception $e) {
+      // If there's an exception, catch and display it for debugging purposes.
+      echo "Error during WSLogin failure test: ".$e->getMessage();
+      // Optionally fail the test to indicate an unexpected error occurred.
+      $this->fail(
+        "WSLogin failure test failed with an exception: ".$e->getMessage()
+      );
+    }
   }
 
   /**

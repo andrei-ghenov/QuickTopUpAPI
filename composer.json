@@ -22,5 +22,10 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^11.0"
+  },
+  "scripts": {
+    "test-api-client": "vendor/bin/phpunit tests/Api/ApiClientTest.php",
+    "test-service-purchase": "vendor/bin/phpunit tests/Service/PurchaseServiceTest.php",
+    "test-service-status_check": "vendor/bin/phpunit tests/Service/StatusCheckServiceTest.php"
   }
 }
