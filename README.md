@@ -1,10 +1,10 @@
-# QuickTopUpAPI
+## QuickTopUpAPI
 QuickTopUpAPI is a PHP-based project aimed at demonstrating seamless connections to a financial transaction system for mobile top-ups. The project showcases the integration process by focusing on purchase requests, status checks, and retrieving product information through API endpoints.
 
-# Purpose
+## Purpose
 QuickTopUpAPI is designed with developers and integrators in mind, providing a foundational example for building and testing API interactions in real-world applications. By offering a streamlined approach to implementing and testing API calls, this project ensures a smooth development experience for services requiring mobile credit top-up functionalities.
 
-# Requirements
+## Requirements
 * **Implement a Simple Interconnect**: Demonstrate a basic connection to the system's API.
 * **Use PHP**: The integration should be implemented in PHP.
 * **Focus on Specific Endpoints:**
@@ -13,7 +13,7 @@ QuickTopUpAPI is designed with developers and integrators in mind, providing a f
   * **Product Information:** Retrieve necessary product information for making purchase requests.
   * **Consider Future Extension:** Structure the solution to allow for easy expansion of functionality in the future.
 
-# Development Plan
+## Development Plan
 1. **Environment Setup:**
    - Configure a local development environment with PHP and necessary extensions.
    - Ensure access to a server environment for testing, if required.
@@ -37,7 +37,7 @@ QuickTopUpAPI is designed with developers and integrators in mind, providing a f
 8. **Deployment and Feedback:**
     - Deploy the sample integration to a test environment.
     - Gather feedback and make necessary adjustments based on testing results.
-### Usage
+## Usage
 To begin using the project, follow these simple steps:
 
 1. **Clone the Repository**: Start by cloning the repository to your local machine:
@@ -65,7 +65,7 @@ To begin using the project, follow these simple steps:
    ./vendor/bin/phpunit tests/Api/ApiClientTest.php
    ```
 
-### Configuration
+## Configuration
 If your project requires specific configuration settings, API keys, or environment variables, follow these steps to set them up:
 
 1. **Rename Environment File**: Locate the `.env.example` file in the project root directory and rename it to `.env`.
