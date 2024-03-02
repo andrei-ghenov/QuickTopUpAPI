@@ -16,42 +16,44 @@ class Product {
    *
    * The product ID.
    */
-  public $id;
+  public int $id;
 
   /**
    * @var string
    *
    * The product name.
    */
-  public $name;
+  public string $name;
 
   /**
    * @var string
    *
    * The product description.
    */
-  public $description;
+  public string $description;
 
   /**
    * @var float
    *
    * The product amount.
    */
-  public $amount;
+  public float $amount;
 
   /**
    * Product constructor.
    *
-   * @param  int     $id
+   * @param  int  $id
    *   The product ID.
    * @param  string  $name
    *   The product name.
    * @param  string  $description
    *   The product description.
-   * @param  float   $amount
+   * @param  float  $amount
    *   The product amount.
    */
-  public function __construct($id, $name, $description, $amount) {
+  public function __construct(
+    int $id, string $name, string $description, float $amount
+  ) {
     $this->id = $id;
     $this->name = $name;
     $this->description = $description;

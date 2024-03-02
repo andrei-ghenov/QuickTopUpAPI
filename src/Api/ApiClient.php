@@ -19,7 +19,7 @@ class ApiClient {
    *
    * The Guzzle HTTP client.
    */
-  private $client;
+  private Client $client;
 
   /**
    * @var string
@@ -48,6 +48,7 @@ class ApiClient {
   public function __construct() {
     $this->client = new Client([
       'base_uri' => $_ENV['API_BASE_URL'],
+      'timeout' => 30,
     ]);
     $this->apiUser = $_ENV['API_USER'];
     $this->apiPassword = $_ENV['API_PASSWORD'];
@@ -67,18 +68,20 @@ class ApiClient {
    * @return mixed
    *   The response from the API.
    */
-  public function sendRequest($method, $endpoint, array $data = []): mixed {
+  public function sendRequest(
+    string $method, string $endpoint, array $data = []
+  ): mixed {
     $timestamp = gmdate('c');
     $authKey = $this->generateAuthKey($timestamp);
     $hashedPassword = $this->hashPassword();
 
     // Add authentication parameters to the request data.
-    $data = array_merge($data, [
+    $data = array_merge([
       'DTime' => $timestamp,
       'AuthKey' => $authKey,
       'User' => $this->apiUser,
       'Password' => $hashedPassword,
-    ]);
+    ], $data);
 
     try {
       $response = $this->client->request($method, $endpoint, [
