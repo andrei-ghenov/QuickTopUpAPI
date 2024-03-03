@@ -30,11 +30,11 @@ class ApiClientTest extends TestCase {
 
       // Use PHPUnit assertions to check for successful login
       // Display the response for debugging purposes
-      // (usually done during development only)
+      // (usually done during development only).
       echo "Response: ";
       var_dump($response);
 
-      // Assert the response indicates a successful login
+      // Assert the response indicates a successful login.
       $this->assertArrayHasKey(
         'AccessCode', $response, "Response does not contain AccessCode"
       );
@@ -48,7 +48,7 @@ class ApiClientTest extends TestCase {
       // In production or CI environments, it might be better to log this error
       // or handle it accordingly.
       echo "Error during WSLogin request: ".$e->getMessage();
-      // Fail the test if an exception is caught
+      // Fail the test if an exception is caught.
       $this->fail(
         "WSLogin request failed with an exception: ".$e->getMessage()
       );
@@ -66,7 +66,7 @@ class ApiClientTest extends TestCase {
         'Password' => 'incorrectPassword',
       ]);
 
-      // Debugging output (use sparingly)
+      // Debugging output (use sparingly).
       echo "Response: ";
       var_dump($response);
 

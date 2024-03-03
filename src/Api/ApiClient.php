@@ -76,8 +76,8 @@ class ApiClient {
     string $endpoint,
     array $data = []
   ): mixed {
-    $dateTime = new DateTime('now', new DateTimeZone('America/New_York'));
-    $timestamp = $dateTime->format('c');
+    // Generate the timestamp in the specified format and ensure it's in GMT/UTC
+    $timestamp = gmdate('Y-m-d\TH:i:s');
     $authKey = $this->generateAuthHmac($timestamp, $this->apiSecurityKey);
     $hashedPassword = $this->generateAuthHmac($this->apiPassword, $authKey);
 
@@ -88,7 +88,6 @@ class ApiClient {
       'User' => $this->apiUser,
       'Password' => $hashedPassword,
     ], $data);
-
     try {
       $response = $this->client->request($method, $endpoint, [
         'json' => $data,
