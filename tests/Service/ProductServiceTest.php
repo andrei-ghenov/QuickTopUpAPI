@@ -1,4 +1,5 @@
 <?php
+
 namespace QuickTopUpAPI\Tests\Service;
 
 use PHPUnit\Framework\TestCase;
