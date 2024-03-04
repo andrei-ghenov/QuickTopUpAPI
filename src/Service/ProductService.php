@@ -35,6 +35,7 @@ class ProductService {
    *
    * @return array
    *   The products.
+   * @throws \Exception
    */
   public function getAllProducts(): array {
     $endpoint = 'WSGetTopUpProducts';
@@ -50,6 +51,7 @@ class ProductService {
    *
    * @return array
    *   The product.
+   * @throws \Exception
    */
   public function getProductById(int $productID): mixed {
     $endpoint = "WSGetSingleTopUpProduct";
