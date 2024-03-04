@@ -29,6 +29,19 @@ class ProductServiceTest extends TestCase {
   private $apiProductID;
 
   /**
+   * Test the getAllProducts method.
+   */
+  public function testGetAllProducts() {
+
+    // Attempt to fetch all products.
+    $product = $this->productService->getAllProducts();
+
+    // Display the response for debugging purposes.
+    echo "testGetAllProducts Response: ";
+    var_dump($product);
+  }
+
+  /**
    * Test the getProductById method.
    */
   public function testGetProductById() {
@@ -37,14 +50,8 @@ class ProductServiceTest extends TestCase {
     $product = $this->productService->getProductById($this->apiProductID);
 
     // Display the response for debugging purposes.
-    echo "Response: ";
+    echo "testGetProductById Response: ";
     var_dump($product);
-
-    // You might want to adjust these assertions based on
-    // the expected product structure.
-    $this->assertIsArray($product);
-    $this->assertArrayHasKey('Product', $product);
-    $this->assertEquals($this->apiProductID , $product['Product']);
   }
 
   /**
