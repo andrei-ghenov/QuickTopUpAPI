@@ -79,7 +79,7 @@ class ApiClient {
     // Generate the timestamp in the specified format and ensure it's in GMT/UTC
     $timestamp = gmdate('Y-m-d\TH:i:s');
     $authKey = $this->generateAuthHmac($timestamp, $this->apiSecurityKey);
-    $hashedPassword = $this->generateAuthHmac($this->apiPassword, $authKey);
+    $hashedPassword = $this->generateAuthHmac(hash('sha256', $this->apiPassword), $authKey);
 
     // Add authentication parameters to the request data.
     $data = array_merge([
