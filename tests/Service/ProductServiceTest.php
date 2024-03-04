@@ -56,7 +56,7 @@ class ProductServiceTest extends TestCase {
   }
 
   /**
-   * Set up the test case.
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     $apiClient = new ApiClient();
