@@ -66,10 +66,6 @@ class ApiClientTest extends TestCase {
         'Password' => 'incorrectPassword',
       ]);
 
-      // Debugging output (use sparingly).
-      echo "Response: ";
-      var_dump($response);
-
       // Assert the response indicates a failed login.
       $this->assertArrayHasKey(
         'AccessCode', $response, "Response does not contain AccessCode"
