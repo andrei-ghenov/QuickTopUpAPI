@@ -7,7 +7,10 @@ namespace QuickTopUpAPI\Model;
  *
  * @package QuickTopUpAPI\Model
  *
- * A simple product model.
+ * Note. This is a simple product model, in a real scenario it will be
+ * a database model.
+ *
+ * Not currently used, created to expand functionality.
  */
 class Product {
 

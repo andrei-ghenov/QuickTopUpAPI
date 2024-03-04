@@ -2,8 +2,6 @@
 
 namespace QuickTopUpAPI\Api;
 
-use DateTime;
-use DateTimeZone;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -76,10 +74,12 @@ class ApiClient {
     string $endpoint,
     array $data = []
   ): mixed {
-    // Generate the timestamp in the specified format and ensure it's in GMT/UTC
+    // Generate the timestamp in GMT/UTC format
     $timestamp = gmdate('Y-m-d\TH:i:s');
     $authKey = $this->generateAuthHmac($timestamp, $this->apiSecurityKey);
-    $hashedPassword = $this->generateAuthHmac(hash('sha256', $this->apiPassword), $authKey);
+    $hashedPassword = $this->generateAuthHmac(
+      hash('sha256', $this->apiPassword), $authKey
+    );
 
     // Add authentication parameters to the request data.
     $data = array_merge([
@@ -106,12 +106,13 @@ class ApiClient {
   /**
    * Generates an HMAC SHA256 hash using the API security key.
    *
-   * @param string $message The message to hash.
-   * @param string $secret The secret key for HMAC.
+   * @param  string  $message  The message to hash.
+   * @param  string  $secret   The secret key for HMAC.
+   *
    * @return string The base64-encoded HMAC hash.
    */
   private function generateAuthHmac($message, $secret): string {
-    return base64_encode(hash_hmac('sha256', $message, $secret, true));
+    return base64_encode(hash_hmac('sha256', $message, $secret, TRUE));
   }
 
 }
