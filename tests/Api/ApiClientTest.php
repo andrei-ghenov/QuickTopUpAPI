@@ -31,7 +31,7 @@ class ApiClientTest extends TestCase {
       // Use PHPUnit assertions to check for successful login
       // Display the response for debugging purposes
       // (usually done during development only).
-      echo "Response: ";
+      echo "testWSLoginSuccess Response: ";
       var_dump($response);
 
       // Assert the response indicates a successful login.
